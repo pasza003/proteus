@@ -1,0 +1,21 @@
+.sidebar-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &.is-mobile {
+        width: 100%;
+    }
+}
+
+h1 {
+    margin-left: 8px;
+}
+
+.sidenav-container {
+    flex: 1;
+}
+
+.is-mobile .sidenav-container {
+    flex: 1 0 auto;
+}
