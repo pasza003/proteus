@@ -1,0 +1,9 @@
+#curriculum-form {
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+    gap: 16px;
+
+    #code, #name {
+        grid-column: span 2;
+    }
+}

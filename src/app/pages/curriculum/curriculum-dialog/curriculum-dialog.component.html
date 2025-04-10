@@ -1,0 +1,72 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Edit' : 'Create' }} Curriculum</h2>
+<mat-dialog-content>
+    <form id="curriculum-form" [formGroup]="curriculumForm">
+
+        <mat-form-field id="code">
+            <mat-label>Code</mat-label>
+            <input
+                cdkFocusInitial
+                matInput
+                placeholder="BSZKUFO-N1"
+                formControlName="code"
+                required
+            />
+            @if (curriculumForm.controls.code.hasError('required')) {
+                <mat-error>Code is required</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field id="name">
+            <mat-label>Name</mat-label>
+            <input
+                matInput
+                placeholder="Üzemmérnök-informatikus BProf_N"
+                formControlName="name"
+                required
+            />
+            @if (curriculumForm.controls.name.hasError('required')) {
+                <mat-error>Name is required</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field id="terms">
+            <mat-label>Terms</mat-label>
+            <input
+                matInput
+                placeholder="6"
+                formControlName="terms"
+                type="number"
+                required
+                numberOnly
+            />
+            @if (curriculumForm.controls.terms.hasError('required')) {
+                <mat-error>Terms is required</mat-error>
+            }
+            @if (curriculumForm.controls.terms.hasError('min')) {
+                <mat-error>Terms must be at least 0</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field id="required-credit">
+            <mat-label>Required credit</mat-label>
+            <input
+                matInput
+                placeholder="180"
+                formControlName="requiredCredit"
+                type="number"
+                required
+                numberOnly
+            />
+            @if (curriculumForm.controls.requiredCredit.hasError('required')) {
+                <mat-error>Required credit is required</mat-error>
+            }
+            @if (curriculumForm.controls.requiredCredit.hasError('min')) {
+                <mat-error>Required credit must be at least 0</mat-error>
+            }
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="cancel()">{{ isEditMode ? 'Cancel' : 'Close' }}</button>
+    <button mat-button [disabled]="!curriculumForm.valid" (click)="save()">{{ isEditMode ? 'Update' : 'Save' }}</button>
+</mat-dialog-actions>
