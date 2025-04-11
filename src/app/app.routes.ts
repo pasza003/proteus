@@ -9,4 +9,8 @@ export const routes: Routes = [
         path: 'curriculum',
         loadComponent: () => import('./pages/curriculum/curriculum.component').then(m => m.CurriculumComponent)
     },
+    {
+        path: 'subject',
+        loadComponent: () => import('./pages/subject/subject.component').then(m => m.SubjectComponent)
+    },
 ];

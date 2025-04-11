@@ -1,0 +1,111 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Edit' : 'Create' }} Subject</h2>
+<mat-dialog-content>
+    <form id="subject-form" [formGroup]="subjectForm">
+
+        <mat-form-field id="name">
+            <mat-label>Name</mat-label>
+            <input
+                cdkFocusInitial
+                matInput
+                placeholder="Webfejlesztési eszközök a gyakorlatban"
+                formControlName="name"
+                required
+            />
+            @if (subjectForm.controls.name.hasError('required')) {
+                <mat-error>Name is required</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field id="code">
+            <mat-label>Code</mat-label>
+            <input
+                matInput
+                placeholder="IN1065SA-N1"
+                formControlName="code"
+                required
+            />
+            @if (subjectForm.controls.code.hasError('required')) {
+                <mat-error>Code is required</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field id="signup-type">
+            <mat-label>Signup type</mat-label>
+            <input
+                matInput
+                placeholder="Kötelezően választható"
+                formControlName="signupType"
+                required
+            />
+            @if (subjectForm.controls.signupType.hasError('required')) {
+                <mat-error>Signup type is required</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field id="requirement-type">
+            <mat-label>Requirement type</mat-label>
+            <input
+                matInput
+                placeholder="Gyakorlati jegy"
+                formControlName="requirementType"
+                required
+            />
+            @if (subjectForm.controls.requirementType.hasError('required')) {
+                <mat-error>Requirement type is required</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field id="interior-organization">
+            <mat-label>Interior organization</mat-label>
+            <input
+                matInput
+                placeholder="TTIK Természettudományi és Informatikai Kar"
+                formControlName="interiorOrganization"
+                required
+            />
+            @if (subjectForm.controls.interiorOrganization.hasError('required')) {
+                <mat-error>Interior organization is required</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field id="recommended-term">
+            <mat-label>Recommended term</mat-label>
+            <input
+                matInput
+                placeholder="0"
+                formControlName="recommendedTerm"
+                type="number"
+                required
+                numberOnly
+            />
+            @if (subjectForm.controls.recommendedTerm.hasError('required')) {
+                <mat-error>Recommended term is required</mat-error>
+            }
+            @if (subjectForm.controls.recommendedTerm.hasError('min')) {
+                <mat-error>Recommended term must be at least 0</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field id="credit">
+            <mat-label>Credit</mat-label>
+            <input
+                matInput
+                placeholder="2"
+                formControlName="credit"
+                type="number"
+                required
+                numberOnly
+            />
+            @if (subjectForm.controls.credit.hasError('required')) {
+                <mat-error>Required credit is required</mat-error>
+            }
+            @if (subjectForm.controls.credit.hasError('min')) {
+                <mat-error>Required credit must be at least 0</mat-error>
+            }
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="cancel()">{{ isEditMode ? 'Cancel' : 'Close' }}</button>
+    <button mat-button [disabled]="!subjectForm.valid" (click)="save()">{{ isEditMode ? 'Update' : 'Save' }}</button>
+</mat-dialog-actions>

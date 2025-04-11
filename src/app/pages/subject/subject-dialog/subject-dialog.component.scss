@@ -1,0 +1,9 @@
+#subject-form {
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+    gap: 16px;
+
+    #code, #name, #signup-type, #requirement-type, #interior-organization {
+        grid-column: span 2;
+    }
+}

@@ -1,0 +1,12 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+table {
+    margin-top: 16px;
+
+    .mat-mdc-row:hover {
+        cursor: pointer;
+    }
+}
