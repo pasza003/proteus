@@ -2,20 +2,24 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-
-    &.is-mobile {
-        width: 100%;
-    }
+    width: 100%;
 }
 
-h1 {
+.title {
     margin-left: 8px;
 }
 
 .sidenav-container {
     flex: 1;
+
+    .content-container {
+        margin: 0 auto;
+        width: 80%;
+    }
 }
 
-.is-mobile .sidenav-container {
-    flex: 1 0 auto;
+.is-mobile {
+    .sidenav-container {
+        flex: 1 0 auto;
+    }
 }

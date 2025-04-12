@@ -1,7 +1,5 @@
-import { SelectionModel } from '@angular/cdk/collections';
-import { Component, inject, model, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { OrganisationDialogComponent } from './organisation-dialog/organisation-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -34,7 +32,6 @@ export class OrganisationComponent {
         'omCode',
         'postCode',
         'street',
-        'image',
     ];
 
     dataSource = new MatTableDataSource<Organisation>(ORGANISATION_DATA);
@@ -56,7 +53,7 @@ export class OrganisationComponent {
 
         dialogRef.afterClosed().subscribe((result) => {
             if (result !== undefined) {
-                this.dataSource.data = this.dataSource.data.map(org =>
+                this.dataSource.data = this.dataSource.data.map((org) =>
                     org.uuid === result.uuid ? result : org
                 );
             }

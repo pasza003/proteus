@@ -5,6 +5,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-sidebar',
@@ -14,17 +15,18 @@ import { MatToolbarModule } from '@angular/material/toolbar';
         MatIconModule,
         MatSidenavModule,
         MatListModule,
+        RouterLink,
     ],
     templateUrl: './sidebar.component.html',
     styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent implements OnDestroy {
-    protected readonly fillerNav = [
-        'Home',
-        'Curriculum',
-        'Organisations',
-        'Terms',
-        'Subjects',
+    protected readonly links = [
+        { label: 'Home', link: '/' },
+        { label: 'Organisation', link: '/organisation' },
+        { label: 'Curriculum', link: '/curriculum' },
+        { label: 'Terms', link: '/terms' },
+        { label: 'Subject', link: '/subject' },
     ];
 
     protected readonly isMobile = signal(true);

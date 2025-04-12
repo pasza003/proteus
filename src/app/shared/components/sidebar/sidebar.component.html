@@ -1,16 +1,22 @@
 <div class="sidebar-container" [class.is-mobile]="isMobile()">
     <mat-toolbar>
         <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-        <h1>Proteus</h1>
+        <h1 class="title">Proteus</h1>
     </mat-toolbar>
 
     <mat-sidenav-container class="sidenav-container">
         <mat-sidenav #snav [mode]="isMobile() ? 'over' : 'side'" [fixedInViewport]="isMobile()" fixedTopGap="56">
             <mat-nav-list>
-                @for (nav of fillerNav; track nav) {
-                    <a mat-list-item>{{nav}}</a>
+                @for (link of links; track link) {
+                    <a mat-list-item [routerLink]="link.link">{{link.label}}</a>
                 }
             </mat-nav-list>
         </mat-sidenav>
+
+        <mat-sidenav-content>
+            <div class="content-container">
+                <ng-content />
+            </div>
+        </mat-sidenav-content>
     </mat-sidenav-container>
 </div>

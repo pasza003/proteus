@@ -3,46 +3,43 @@
     <button mat-raised-button (click)="create()">Create</button>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <ng-container matColumnDef="code">
-        <th mat-header-cell *matHeaderCellDef>Code</th>
-        <td mat-cell *matCellDef="let organisation">{{ organisation.code }}</td>
-    </ng-container>
+<div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="code">
+            <th mat-header-cell *matHeaderCellDef>Code</th>
+            <td mat-cell *matCellDef="let organisation">{{ organisation.code }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="city">
-        <th mat-header-cell *matHeaderCellDef>City</th>
-        <td mat-cell *matCellDef="let organisation">{{ organisation.city }}</td>
-    </ng-container>
+        <ng-container matColumnDef="city">
+            <th mat-header-cell *matHeaderCellDef>City</th>
+            <td mat-cell *matCellDef="let organisation">{{ organisation.city }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let organisation">{{ organisation.name }}</td>
-    </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let organisation">{{ organisation.name }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="omCode">
-        <th mat-header-cell *matHeaderCellDef>OM Code</th>
-        <td mat-cell *matCellDef="let organisation">{{ organisation.omCode }}</td>
-    </ng-container>
+        <ng-container matColumnDef="omCode">
+            <th mat-header-cell *matHeaderCellDef>OM Code</th>
+            <td mat-cell *matCellDef="let organisation">{{ organisation.omCode }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="postCode">
-        <th mat-header-cell *matHeaderCellDef>Post Code</th>
-        <td mat-cell *matCellDef="let organisation">{{ organisation.postCode }}</td>
-    </ng-container>
+        <ng-container matColumnDef="postCode">
+            <th mat-header-cell *matHeaderCellDef>Post Code</th>
+            <td mat-cell *matCellDef="let organisation">{{ organisation.postCode }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="street">
-        <th mat-header-cell *matHeaderCellDef>Street</th>
-        <td mat-cell *matCellDef="let organisation">{{ organisation.street }}</td>
-    </ng-container>
+        <ng-container matColumnDef="street">
+            <th mat-header-cell *matHeaderCellDef>Street</th>
+            <td mat-cell *matCellDef="let organisation">{{ organisation.street }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="image">
-        <th mat-header-cell *matHeaderCellDef>Image</th>
-        <td mat-cell *matCellDef="let organisation">{{ organisation.image }}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
         mat-row
         *matRowDef="let row; columns: displayedColumns"
         (click)="edit(row)"
-    ></tr>
-</table>
+        ></tr>
+    </table>
+</div>
