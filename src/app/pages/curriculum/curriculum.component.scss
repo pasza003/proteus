@@ -7,10 +7,8 @@
     margin-top: 16px;
     overflow-x: scroll;
 
-    table {
-        .mat-mdc-row:hover {
+    table .mat-mdc-row:hover {
             cursor: pointer;
             opacity: 0.6;
-        }
     }
 }

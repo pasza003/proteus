@@ -4,48 +4,42 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class CurriculumService {
-    constructor() {}
+  constructor() {}
 
-    private curriculums: Curriculum[] = [
-        {
-            uuid: '816d823e-609f-4ef8-b59a-57904cc0230b',
-            code: 'BSZKUFO-N1',
-            name: 'Üzemmérnök-informatikus BProf_N',
-            terms: 6,
-            requiredCredit: 180,
-        },
-    ];
+  private curriculums: Curriculum[] = [
+    {
+      uuid: '816d823e-609f-4ef8-b59a-57904cc0230b',
+      code: 'BSZKUFO-N1',
+      name: 'Üzemmérnök-informatikus BProf_N',
+      terms: 6,
+      requiredCredit: 180,
+    },
+  ];
 
-    private curriculumSubject = new BehaviorSubject<Curriculum[]>(
-        this.curriculums
-    );
+  private curriculumSubject = new BehaviorSubject<Curriculum[]>(this.curriculums);
 
-    getAllCurriculums(): Observable<Curriculum[]> {
-        return this.curriculumSubject.asObservable();
-    }
+  getAllCurriculums(): Observable<Curriculum[]> {
+    return this.curriculumSubject.asObservable();
+  }
 
-    addCurriculum(curriculum: Omit<Curriculum, 'uuid'>): Promise<Curriculum> {
-        const newCurriculum: Curriculum = {
-            ...curriculum,
-            uuid: uuidv4(),
-        };
+  addCurriculum(curriculum: Omit<Curriculum, 'uuid'>): Promise<Curriculum> {
+    const newCurriculum: Curriculum = {
+      ...curriculum,
+      uuid: uuidv4(),
+    };
 
-        this.curriculums.push(newCurriculum);
+    this.curriculums.push(newCurriculum);
 
-        this.curriculumSubject.next([...this.curriculums]);
-        return new Promise((resolve) => resolve(newCurriculum));
-    }
+    this.curriculumSubject.next([...this.curriculums]);
+    return new Promise(resolve => resolve(newCurriculum));
+  }
 
-    editCurriculum(curriculum: Curriculum): void {
-        this.curriculums = this.curriculums.map((c) =>
-            c.uuid === curriculum.uuid ? curriculum : c
-        );
+  editCurriculum(curriculum: Curriculum): void {
+    this.curriculums = this.curriculums.map(c => (c.uuid === curriculum.uuid ? curriculum : c));
 
-        this.curriculumSubject.next([
-            ...this.curriculums
-        ]);
-    }
+    this.curriculumSubject.next([...this.curriculums]);
+  }
 }
