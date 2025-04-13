@@ -1,14 +1,14 @@
 .header {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .table-container {
-    margin-top: 16px;
-    overflow-x: scroll;
+  margin-top: 16px;
+  overflow-x: scroll;
 
-    table .mat-mdc-row:hover {
-            cursor: pointer;
-            opacity: 0.6;
-    }
+  table .mat-mdc-row:hover {
+    cursor: pointer;
+    opacity: 0.6;
+  }
 }

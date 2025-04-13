@@ -1,88 +1,56 @@
 <h2 mat-dialog-title>{{ isEditMode ? 'Edit' : 'Create' }} Organisation</h2>
 <mat-dialog-content>
-    <form id="organisation-form" [formGroup]="organisationForm">
+  <form id="organisation-form" [formGroup]="organisationForm">
+    <mat-form-field id="code">
+      <mat-label>Code</mat-label>
+      <input cdkFocusInitial matInput placeholder="SZTE" formControlName="code" required />
+      @if (organisationForm.controls.code.hasError('required')) {
+        <mat-error>Code is required</mat-error>
+      }
+    </mat-form-field>
 
-        <mat-form-field id="code">
-            <mat-label>Code</mat-label>
-            <input
-                cdkFocusInitial
-                matInput
-                placeholder="SZTE"
-                formControlName="code"
-                required
-            />
-            @if (organisationForm.controls.code.hasError('required')) {
-                <mat-error>Code is required</mat-error>
-            }
-        </mat-form-field>
+    <mat-form-field id="city">
+      <mat-label>City</mat-label>
+      <input matInput placeholder="Szeged" formControlName="city" required />
+      @if (organisationForm.controls.city.hasError('required')) {
+        <mat-error>City is required</mat-error>
+      }
+    </mat-form-field>
 
-        <mat-form-field id="city">
-            <mat-label>City</mat-label>
-            <input
-                matInput
-                placeholder="Szeged"
-                formControlName="city"
-                required
-            />
-            @if (organisationForm.controls.city.hasError('required')) {
-                <mat-error>City is required</mat-error>
-            }
-        </mat-form-field>
+    <mat-form-field id="name">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Szegedi Tudományegyetem" formControlName="name" required />
+      @if (organisationForm.controls.name.hasError('required')) {
+        <mat-error>Name is required</mat-error>
+      }
+    </mat-form-field>
 
-        <mat-form-field id="name">
-            <mat-label>Name</mat-label>
-            <input
-                matInput
-                placeholder="Szegedi Tudományegyetem"
-                formControlName="name"
-                required
-            />
-            @if (organisationForm.controls.name.hasError('required')) {
-                <mat-error>Name is required</mat-error>
-            }
-        </mat-form-field>
+    <mat-form-field id="om-code">
+      <mat-label>OM Code</mat-label>
+      <input matInput placeholder="FI62198" formControlName="omCode" required />
+      @if (organisationForm.controls.omCode.hasError('required')) {
+        <mat-error>OM Code is required</mat-error>
+      }
+    </mat-form-field>
 
-        <mat-form-field id="om-code">
-            <mat-label>OM Code</mat-label>
-            <input
-                matInput
-                placeholder="FI62198"
-                formControlName="omCode"
-                required
-            />
-            @if (organisationForm.controls.omCode.hasError('required')) {
-                <mat-error>OM Code is required</mat-error>
-            }
-        </mat-form-field>
+    <mat-form-field id="post-code">
+      <mat-label>Post Code</mat-label>
+      <input matInput placeholder="6720" formControlName="postCode" required />
+      @if (organisationForm.controls.postCode.hasError('required')) {
+        <mat-error>Post Code is required</mat-error>
+      }
+    </mat-form-field>
 
-        <mat-form-field id="post-code">
-            <mat-label>Post Code</mat-label>
-            <input
-                matInput
-                placeholder="6720"
-                formControlName="postCode"
-                required
-            />
-            @if (organisationForm.controls.postCode.hasError('required')) {
-                <mat-error>Post Code is required</mat-error>
-            }
-        </mat-form-field>
-
-        <mat-form-field id="street">
-            <mat-label>Street</mat-label>
-            <input
-                matInput
-                placeholder="Dugonics tér 13."
-                formControlName="street"
-                required
-            />
-            @if (organisationForm.controls.street.hasError('required')) {
-                <mat-error>Street is required</mat-error>
-            }
-        </mat-form-field>
-    </form>
+    <mat-form-field id="street">
+      <mat-label>Street</mat-label>
+      <input matInput placeholder="Dugonics tér 13." formControlName="street" required />
+      @if (organisationForm.controls.street.hasError('required')) {
+        <mat-error>Street is required</mat-error>
+      }
+    </mat-form-field>
+  </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-button (click)="cancel()">{{ isEditMode ? 'Cancel' : 'Close' }}</button>
-    <button mat-button [disabled]="!organisationForm.valid" (click)="save()">{{ isEditMode ? 'Update' : 'Save' }}</button>
+  <button mat-button (click)="cancel()">{{ isEditMode ? 'Cancel' : 'Close' }}</button>
+  <button mat-button [disabled]="!organisationForm.valid" (click)="save()">{{ isEditMode ? 'Update' : 'Save' }}</button>
 </mat-dialog-actions>
