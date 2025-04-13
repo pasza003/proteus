@@ -4,8 +4,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { NumberOnlyDirective } from '../../../shared/directives/number-only.directive';
-import { Subject } from '../../../shared/models/subject';
+import { RequirementType, RequirementTypeMap, SignupTypeMap, SignupTypes, Subject } from '../../../shared/models/subject';
 
 @Component({
   selector: 'app-subject-dialog',
@@ -22,6 +23,7 @@ import { Subject } from '../../../shared/models/subject';
     FormsModule,
     ReactiveFormsModule,
     NumberOnlyDirective,
+    MatSelectModule,
   ],
   templateUrl: './subject-dialog.component.html',
   styleUrl: './subject-dialog.component.scss',
@@ -46,6 +48,8 @@ export class SubjectDialogComponent implements OnInit {
   readonly dialogRef = inject(MatDialogRef<SubjectDialogComponent>);
 
   readonly data = inject<Subject>(MAT_DIALOG_DATA);
+  readonly signupTypes: SignupTypes[] = Object.values(SignupTypeMap);
+  readonly requirementTypes: RequirementType[] = Object.values(RequirementTypeMap);
 
   subjectForm = new FormGroup({
     uuid: new FormControl(''),

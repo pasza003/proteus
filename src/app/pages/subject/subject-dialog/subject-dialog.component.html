@@ -29,27 +29,25 @@
             }
         </mat-form-field>
 
-        <mat-form-field id="signup-type">
+        <mat-form-field id="signup-type" >
             <mat-label>Signup type</mat-label>
-            <input
-                matInput
-                placeholder="Kötelezően választható"
-                formControlName="signupType"
-                required
-            />
+            <mat-select formControlName="signupType" required>
+                @for (signupType of signupTypes; track signupType) {
+                    <mat-option [value]="signupType">{{ signupType }}</mat-option>
+                }
+            </mat-select>
             @if (subjectForm.controls.signupType.hasError('required')) {
                 <mat-error>Signup type is required</mat-error>
             }
         </mat-form-field>
 
-        <mat-form-field id="requirement-type">
+          <mat-form-field id="requirement-type">
             <mat-label>Requirement type</mat-label>
-            <input
-                matInput
-                placeholder="Gyakorlati jegy"
-                formControlName="requirementType"
-                required
-            />
+            <mat-select formControlName="requirementType" required>
+                @for (req of requirementTypes; track req) {
+                    <mat-option [value]="req">{{ req }}</mat-option>
+                }
+            </mat-select>
             @if (subjectForm.controls.requirementType.hasError('required')) {
                 <mat-error>Requirement type is required</mat-error>
             }
