@@ -16,7 +16,6 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { v4 as uuidv4 } from 'uuid';
 import { NumberOnlyDirective } from '../../../shared/directives/number-only.directive';
 import { Subject } from '../../../shared/models/subject';
 
@@ -79,11 +78,6 @@ export class SubjectDialogComponent implements OnInit {
 
     save() {
         if (this.subjectForm.valid) {
-            this.subjectForm.controls.uuid.setValue(
-                !this.subjectForm.value.uuid
-                    ? uuidv4()
-                    : this.subjectForm.value.uuid
-            );
             this.dialogRef.close(this.subjectForm.value);
         } else {
             console.log('Error');

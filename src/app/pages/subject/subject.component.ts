@@ -1,28 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { Subject } from '../../shared/models/subject';
 import { SubjectDialogComponent } from './subject-dialog/subject-dialog.component';
-
-const SUBJECT_DATA: Subject[] = [
-    {
-        uuid: 'ae45dc89-8086-4f5d-8e68-f82e3a295d0e',
-        name: 'Webfejlesztési eszközök a gyakorlatban',
-        code: 'IN1065SA',
-        signupType: 'Kötelezően választható',
-        requirementType: 'Gyakorlati jegy',
-        interiorOrganization: 'TTIK Természettudományi és Informatikai Kar',
-        recommendedTerm: 0,
-        credit: 2,
-        classesPerWeek: [
-            {
-                courseType: 'Gyakorlat',
-                classesPerWeek: 2,
-            },
-        ],
-    },
-];
+import { SubjectService } from '../../shared/services/subject.service';
 
 @Component({
     selector: 'app-subject',
@@ -30,8 +12,9 @@ const SUBJECT_DATA: Subject[] = [
     templateUrl: './subject.component.html',
     styleUrl: './subject.component.scss',
 })
-export class SubjectComponent {
-    displayedColumns: string[] = [
+export class SubjectComponent implements OnInit {
+    readonly dialog = inject(MatDialog);
+    readonly displayedColumns: string[] = [
         'name',
         'code',
         'signupType',
@@ -41,28 +24,45 @@ export class SubjectComponent {
         'credit',
     ];
 
-    dataSource = new MatTableDataSource<Subject>(SUBJECT_DATA);
+    subjects: Subject[] = [];
 
-    readonly dialog = inject(MatDialog);
-    create(): void {
-        const dialogRef = this.dialog.open(SubjectDialogComponent);
+    constructor(private subjectService: SubjectService) {}
 
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result !== undefined) {
-                this.dataSource.data = [...this.dataSource.data, result];
-            }
+    ngOnInit(): void {
+        this.loadSubjects();
+    }
+
+    loadSubjects(): void {
+        this.subjectService.getAllSubjects().subscribe({
+            next: (subjects) => {
+                this.subjects = subjects;
+            },
+            error: () => {
+                console.log('Error while loading organisations.');
+            },
         });
     }
-    edit(row: Subject): void {
+
+    openCreateSubjectDialog(): void {
+        const dialogRef = this.dialog.open(SubjectDialogComponent);
+
+        dialogRef
+            .afterClosed()
+            .subscribe((result: Omit<Subject, 'uuid'> | undefined) => {
+                if (result !== undefined) {
+                    this.subjectService.addSubject(result);
+                }
+            });
+    }
+
+    openEditSubjectDialog(row: Subject): void {
         const dialogRef = this.dialog.open(SubjectDialogComponent, {
             data: row,
         });
 
-        dialogRef.afterClosed().subscribe((result) => {
+        dialogRef.afterClosed().subscribe((result: Subject | undefined) => {
             if (result !== undefined) {
-                this.dataSource.data = this.dataSource.data.map((org) =>
-                    org.uuid === result.uuid ? result : org
-                );
+                this.subjectService.editSubject(result);
             }
         });
     }

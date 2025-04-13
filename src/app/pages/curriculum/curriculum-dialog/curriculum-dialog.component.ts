@@ -75,11 +75,6 @@ export class CurriculumDialogComponent implements OnInit {
 
     save() {
         if (this.curriculumForm.valid) {
-            this.curriculumForm.controls.uuid.setValue(
-                !this.curriculumForm.value.uuid
-                    ? uuidv4()
-                    : this.curriculumForm.value.uuid
-            );
             this.dialogRef.close(this.curriculumForm.value);
         } else {
             console.log('Error');

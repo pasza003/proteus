@@ -22,8 +22,6 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Organisation } from '../../../shared/models/organisation';
-import { v4 as uuidv4 } from 'uuid';
-
 
 @Component({
     selector: 'app-organisation-dialog',
@@ -48,7 +46,7 @@ export class OrganisationDialogComponent implements OnInit {
     ngOnInit(): void {
         if (this.data) {
             this.isEditMode = true;
-            const  controls = this.organisationForm.controls;
+            const controls = this.organisationForm.controls;
             controls.uuid.setValue(this.data.uuid);
             controls.code.setValue(this.data.code);
             controls.city.setValue(this.data.city);
@@ -81,12 +79,9 @@ export class OrganisationDialogComponent implements OnInit {
 
     save() {
         if (this.organisationForm.valid) {
-            this.organisationForm.controls.uuid.setValue(
-                !this.organisationForm.value.uuid ? uuidv4() : this.organisationForm.value.uuid
-            );
             this.dialogRef.close(this.organisationForm.value);
         } else {
-            console.log('Error')
+            console.log('Error');
         }
     }
 }

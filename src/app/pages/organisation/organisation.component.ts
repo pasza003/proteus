@@ -1,22 +1,10 @@
-import { Component, inject } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
-import { OrganisationDialogComponent } from './organisation-dialog/organisation-dialog.component';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
 import { Organisation } from '../../shared/models/organisation';
-
-const ORGANISATION_DATA: Organisation[] = [
-    {
-        uuid: '927e2278-7fa7-4bc8-ad5d-5809f2fb6105',
-        code: 'SZTE',
-        city: 'Szeged',
-        name: 'Szegedi Tudományegyetem',
-        omCode: 'FI62198',
-        postCode: '6720',
-        street: 'Dugonics tér 13.',
-        image: '',
-    },
-];
+import { OrganisationService } from './../../shared/services/organisation.service';
+import { OrganisationDialogComponent } from './organisation-dialog/organisation-dialog.component';
 
 @Component({
     selector: 'app-organisation',
@@ -24,8 +12,9 @@ const ORGANISATION_DATA: Organisation[] = [
     templateUrl: './organisation.component.html',
     styleUrl: './organisation.component.scss',
 })
-export class OrganisationComponent {
-    displayedColumns: string[] = [
+export class OrganisationComponent implements OnInit {
+    readonly dialog = inject(MatDialog);
+    readonly displayedColumns: string[] = [
         'code',
         'city',
         'name',
@@ -33,30 +22,48 @@ export class OrganisationComponent {
         'postCode',
         'street',
     ];
+    organisations: Organisation[] = [];
 
-    dataSource = new MatTableDataSource<Organisation>(ORGANISATION_DATA);
+    constructor(private organisationService: OrganisationService) {}
 
-    readonly dialog = inject(MatDialog);
-    create(): void {
-        const dialogRef = this.dialog.open(OrganisationDialogComponent);
+    ngOnInit(): void {
+        this.loadOrganisations();
+    }
 
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result !== undefined) {
-                this.dataSource.data = [...this.dataSource.data, result];
-            }
+    loadOrganisations(): void {
+        this.organisationService.getAllOrganisations().subscribe({
+            next: (organisations) => {
+                this.organisations = organisations;
+            },
+            error: () => {
+                console.log('Error while loading organisations.');
+            },
         });
     }
-    edit(row: Organisation): void {
+
+    openCreateOrganisationDialog(): void {
+        const dialogRef = this.dialog.open(OrganisationDialogComponent);
+
+        dialogRef
+            .afterClosed()
+            .subscribe((result: Omit<Organisation, 'uuid'> | undefined) => {
+                if (result !== undefined) {
+                    this.organisationService.addOrganisation(result);
+                }
+            });
+    }
+
+    openEditOrganisationDialog(row: Organisation): void {
         const dialogRef = this.dialog.open(OrganisationDialogComponent, {
             data: row,
         });
 
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result !== undefined) {
-                this.dataSource.data = this.dataSource.data.map((org) =>
-                    org.uuid === result.uuid ? result : org
-                );
-            }
-        });
+        dialogRef
+            .afterClosed()
+            .subscribe((result: Organisation | undefined) => {
+                if (result !== undefined) {
+                    this.organisationService.editOrganisation(result);
+                }
+            });
     }
 }
