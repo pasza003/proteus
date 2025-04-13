@@ -1,0 +1,41 @@
+<h2 mat-dialog-title class="title">Register</h2>
+
+<div class="register-container">
+  <form [formGroup]="registerForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Code</mat-label>
+      <input matInput type="text" formControlName="code" />
+      <mat-icon matSuffix>code</mat-icon>
+      @if (registerForm.controls.code.hasError('required')) {
+        <mat-error>Code is required</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" />
+      <mat-icon matSuffix>email</mat-icon>
+      @if (registerForm.controls.email.hasError('required')) {
+        <mat-error>Email is required</mat-error>
+      }
+      @if (registerForm.controls.email.hasError('email')) {
+        <mat-error>Email needs to be a valid email</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" />
+      <mat-icon matSuffix>lock</mat-icon>
+      @if (registerForm.controls.password.hasError('required')) {
+        <mat-error>Password is required</mat-error>
+      }
+      @if (registerForm.controls.password.hasError('minlength')) {
+        <mat-error>Password is too short</mat-error>
+      }
+    </mat-form-field>
+
+    <button mat-flat-button [disabled]="!registerForm.valid" (click)="register()" type="submit">Register</button>
+    <p class="login-text">Already have an account? <span [routerLink]="['/login']">Login</span></p>
+  </form>
+</div>

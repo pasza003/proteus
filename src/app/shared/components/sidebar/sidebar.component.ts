@@ -15,7 +15,11 @@ import { RouterLink } from '@angular/router';
   styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent implements OnDestroy {
-  protected readonly links = [{ label: 'Home', link: '/' }];
+  protected readonly links = [
+    { label: 'Home', link: '/' },
+    { label: 'Login', link: '/login' },
+    { label: 'Register', link: '/register' },
+  ];
 
   protected readonly adminLinks = [
     { label: 'Organisation', link: '/organisation' },

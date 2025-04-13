@@ -1,0 +1,35 @@
+.title {
+  text-align: center;
+}
+
+.login-container {
+  width: 50%;
+  margin: 16px auto;
+}
+
+@media only screen and (max-width: 800px) {
+  .login-container {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  button {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .register-text {
+    text-align: center;
+
+    span {
+      cursor: pointer;
+      color: var(--mat-sys-on-primary-container);
+    }
+  }
+}
