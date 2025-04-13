@@ -1,6 +1,7 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Component, OnDestroy, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -9,13 +10,14 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule, RouterLink],
+  imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule, RouterLink, MatExpansionModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent implements OnDestroy {
-  protected readonly links = [
-    { label: 'Home', link: '/' },
+  protected readonly links = [{ label: 'Home', link: '/' }];
+
+  protected readonly adminLinks = [
     { label: 'Organisation', link: '/organisation' },
     { label: 'Curriculum', link: '/curriculum' },
     { label: 'Subject', link: '/subject' },
