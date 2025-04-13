@@ -37,7 +37,7 @@
                 formControlName="terms"
                 type="number"
                 required
-                numberOnly
+                appNumberOnly
             />
             @if (curriculumForm.controls.terms.hasError('required')) {
                 <mat-error>Terms is required</mat-error>
@@ -55,7 +55,7 @@
                 formControlName="requiredCredit"
                 type="number"
                 required
-                numberOnly
+                appNumberOnly
             />
             @if (curriculumForm.controls.requiredCredit.hasError('required')) {
                 <mat-error>Required credit is required</mat-error>

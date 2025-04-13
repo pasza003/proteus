@@ -76,7 +76,7 @@
                 formControlName="recommendedTerm"
                 type="number"
                 required
-                numberOnly
+                appNumberOnly
             />
             @if (subjectForm.controls.recommendedTerm.hasError('required')) {
                 <mat-error>Recommended term is required</mat-error>
@@ -94,7 +94,7 @@
                 formControlName="credit"
                 type="number"
                 required
-                numberOnly
+                appNumberOnly
             />
             @if (subjectForm.controls.credit.hasError('required')) {
                 <mat-error>Required credit is required</mat-error>
