@@ -1,25 +1,31 @@
 import { Routes } from '@angular/router';
+import { adminGuard, publicGuard } from './shared/guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: 'organisation',
     loadComponent: () => import('./pages/organisation/organisation.component').then(m => m.OrganisationComponent),
+    canActivate: [adminGuard],
   },
   {
     path: 'curriculum',
     loadComponent: () => import('./pages/curriculum/curriculum.component').then(m => m.CurriculumComponent),
+    canActivate: [adminGuard],
   },
   {
     path: 'subject',
     loadComponent: () => import('./pages/subject/subject.component').then(m => m.SubjectComponent),
+    canActivate: [adminGuard],
   },
   {
     path: 'login',
     loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent),
+    canActivate: [publicGuard],
   },
   {
     path: 'register',
     loadComponent: () => import('./pages/register/register.component').then(m => m.RegisterComponent),
+    canActivate: [publicGuard],
   },
   {
     path: 'home',
