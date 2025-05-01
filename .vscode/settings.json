@@ -31,10 +31,5 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "px-to-rem.px-per-rem": 16,
-  "cSpell.words": [
-    "organisation",
-    "organisations",
-    "uuidv"
-  ]
+  "px-to-rem.px-per-rem": 16
 }
