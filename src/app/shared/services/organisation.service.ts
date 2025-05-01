@@ -1,48 +1,78 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { v4 as uuidv4 } from 'uuid';
+import { addDoc, collection, collectionData, deleteDoc, doc, docData, Firestore, updateDoc } from '@angular/fire/firestore';
+import { catchError, from, Observable } from 'rxjs';
 import { Organisation } from '../models/organisation';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrganisationService {
-  constructor() {}
+  private readonly collectionName = 'organisations';
 
-  private organisations: Organisation[] = [
-    {
-      uuid: '927e2278-7fa7-4bc8-ad5d-5809f2fb6105',
-      code: 'SZTE',
-      city: 'Szeged',
-      name: 'Szegedi Tudományegyetem',
-      omCode: 'FI62198',
-      postCode: '6720',
-      street: 'Dugonics tér 13.',
-      image: '',
-    },
-  ];
+  public readonly organisations$: Observable<Organisation[]>;
 
-  private organisationsSubject = new BehaviorSubject<Organisation[]>(this.organisations);
-
-  getAllOrganisations(): Observable<Organisation[]> {
-    return this.organisationsSubject.asObservable();
+  constructor(
+    private readonly firestore: Firestore,
+    private readonly snackBarService: SnackbarService
+  ) {
+    this.organisations$ = this.getAll().pipe(
+      catchError(() => {
+        this.snackBarService.openErrorSnackbar('Error while loading organisations.');
+        return [[]];
+      })
+    );
   }
 
-  addOrganisation(organisation: Omit<Organisation, 'uuid'>): Promise<Organisation> {
-    const newOrganisation: Organisation = {
-      ...organisation,
-      uuid: uuidv4(),
-    };
-
-    this.organisations.push(newOrganisation);
-
-    this.organisationsSubject.next([...this.organisations]);
-    return new Promise(resolve => resolve(newOrganisation));
+  public getAll(): Observable<Organisation[]> {
+    const organisationsRef = collection(this.firestore, this.collectionName);
+    return collectionData(organisationsRef, { idField: 'id' }) as Observable<Organisation[]>;
   }
 
-  editOrganisation(organisation: Organisation): void {
-    this.organisations = this.organisations.map(o => (o.uuid === organisation.uuid ? organisation : o));
+  public getById(id: string): Observable<Organisation> {
+    const organisationDocRef = doc(this.firestore, `${this.collectionName}/${id}`);
+    return docData(organisationDocRef, { idField: 'id' }) as Observable<Organisation>;
+  }
 
-    this.organisationsSubject.next([...this.organisations]);
+  public create(organisation: Organisation): void {
+    const organisationsRef = collection(this.firestore, this.collectionName);
+    from(addDoc(organisationsRef, organisation))
+      .pipe(
+        catchError(() => {
+          this.snackBarService.openErrorSnackbar('Error while saving organisation.');
+          return [];
+        })
+      )
+      .subscribe(() => {
+        this.snackBarService.openSuccessSnackbar('Successfully saved organisation.');
+      });
+  }
+
+  public update(organisation: Organisation): void {
+    const organisationDocRef = doc(this.firestore, `${this.collectionName}/${organisation.id}`);
+    from(updateDoc(organisationDocRef, { ...organisation }))
+      .pipe(
+        catchError(() => {
+          this.snackBarService.openErrorSnackbar('Error while editing organisation.');
+          return [];
+        })
+      )
+      .subscribe(() => {
+        this.snackBarService.openSuccessSnackbar('Successfully edited organisation.');
+      });
+  }
+
+  public delete(id: string): void {
+    const organisationDocRef = doc(this.firestore, `${this.collectionName}/${id}`);
+    from(deleteDoc(organisationDocRef))
+      .pipe(
+        catchError(() => {
+          this.snackBarService.openErrorSnackbar('Error while deleting organisation.');
+          return [];
+        })
+      )
+      .subscribe(() => {
+        this.snackBarService.openSuccessSnackbar('Successfully deleted organisation.');
+      });
   }
 }

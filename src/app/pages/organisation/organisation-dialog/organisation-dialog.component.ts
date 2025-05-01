@@ -26,11 +26,25 @@ import { Organisation } from '../../../shared/models/organisation';
   styleUrl: './organisation-dialog.component.scss',
 })
 export class OrganisationDialogComponent implements OnInit {
-  ngOnInit(): void {
+  private readonly dialogRef = inject(MatDialogRef<OrganisationDialogComponent>);
+  private readonly data = inject<Organisation>(MAT_DIALOG_DATA);
+
+  public isEditMode = false;
+  public readonly organisationForm = new FormGroup({
+    id: new FormControl(''),
+    code: new FormControl('', [Validators.required]),
+    city: new FormControl('', [Validators.required]),
+    name: new FormControl('', [Validators.required]),
+    omCode: new FormControl('', [Validators.required]),
+    postCode: new FormControl('', [Validators.required]),
+    street: new FormControl('', [Validators.required]),
+  });
+
+  public ngOnInit(): void {
     if (this.data) {
       this.isEditMode = true;
       const controls = this.organisationForm.controls;
-      controls.uuid.setValue(this.data.uuid);
+      controls.id.setValue(this.data.id);
       controls.code.setValue(this.data.code);
       controls.city.setValue(this.data.city);
       controls.name.setValue(this.data.name);
@@ -39,32 +53,14 @@ export class OrganisationDialogComponent implements OnInit {
       controls.street.setValue(this.data.street);
     }
   }
-  isEditMode = false;
 
-  readonly dialogRef = inject(MatDialogRef<OrganisationDialogComponent>);
-
-  readonly data = inject<Organisation>(MAT_DIALOG_DATA);
-
-  organisationForm = new FormGroup({
-    uuid: new FormControl(''),
-    code: new FormControl('', [Validators.required]),
-    city: new FormControl('', [Validators.required]),
-    name: new FormControl('', [Validators.required]),
-    omCode: new FormControl('', [Validators.required]),
-    postCode: new FormControl('', [Validators.required]),
-    street: new FormControl('', [Validators.required]),
-    image: new FormControl('', []),
-  });
-
-  cancel(): void {
+  public cancel(): void {
     this.dialogRef.close();
   }
 
-  save() {
+  public save(): void {
     if (this.organisationForm.valid) {
       this.dialogRef.close(this.organisationForm.value);
-    } else {
-      console.log('Error');
     }
   }
 }
