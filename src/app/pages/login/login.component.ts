@@ -15,18 +15,16 @@ import { AuthService } from './../../shared/services/auth.service';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
-  loginForm = new FormGroup({
+  public readonly loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   });
 
-  login() {
+  public login(): void {
     if (this.loginForm.valid) {
-      // this.authService.login(this.loginForm.value);
-    } else {
-      console.log('Error');
+      this.authService.login(this.loginForm.value.email!, this.loginForm.value.password!);
     }
   }
 }
