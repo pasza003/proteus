@@ -1,6 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { Organisation } from '../../shared/models/organisation';
 import { OrganisationService } from './../../shared/services/organisation.service';
@@ -8,51 +10,41 @@ import { OrganisationDialogComponent } from './organisation-dialog/organisation-
 
 @Component({
   selector: 'app-organisation',
-  imports: [MatTableModule, MatButtonModule],
+  imports: [MatTableModule, MatButtonModule, MatIcon],
   templateUrl: './organisation.component.html',
   styleUrl: './organisation.component.scss',
 })
-export class OrganisationComponent implements OnInit {
-  readonly dialog = inject(MatDialog);
-  readonly displayedColumns: string[] = ['code', 'city', 'name', 'omCode', 'postCode', 'street'];
-  organisations: Organisation[] = [];
+export class OrganisationComponent {
+  private readonly dialog = inject(MatDialog);
 
-  constructor(private organisationService: OrganisationService) {}
+  public readonly displayedColumns: string[] = ['code', 'city', 'name', 'omCode', 'postCode', 'street', 'actions'];
+  public readonly organisations: Signal<Organisation[]>;
 
-  ngOnInit(): void {
-    this.loadOrganisations();
+  constructor(private readonly organisationService: OrganisationService) {
+    this.organisations = toSignal(this.organisationService.organisations$, { initialValue: [] });
   }
 
-  loadOrganisations(): void {
-    this.organisationService.getAllOrganisations().subscribe({
-      next: organisations => {
-        this.organisations = organisations;
-      },
-      error: () => {
-        console.log('Error while loading organisations.');
-      },
-    });
-  }
-
-  openCreateOrganisationDialog(): void {
+  public openCreateOrganisationDialog(): void {
     const dialogRef = this.dialog.open(OrganisationDialogComponent);
 
-    dialogRef.afterClosed().subscribe((result: Omit<Organisation, 'uuid'> | undefined) => {
-      if (result !== undefined) {
-        this.organisationService.addOrganisation(result);
+    dialogRef.afterClosed().subscribe((result: Organisation | undefined) => {
+      if (result) {
+        this.organisationService.create(result);
       }
     });
   }
 
-  openEditOrganisationDialog(row: Organisation): void {
-    const dialogRef = this.dialog.open(OrganisationDialogComponent, {
-      data: row,
-    });
+  public openEditOrganisationDialog(data: Organisation): void {
+    const dialogRef = this.dialog.open(OrganisationDialogComponent, { data });
 
     dialogRef.afterClosed().subscribe((result: Organisation | undefined) => {
-      if (result !== undefined) {
-        this.organisationService.editOrganisation(result);
+      if (result) {
+        this.organisationService.update(result);
       }
     });
+  }
+
+  public delete(row: Organisation): void {
+    this.organisationService.delete(row.id);
   }
 }
