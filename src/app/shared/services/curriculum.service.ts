@@ -1,45 +1,78 @@
 import { Injectable } from '@angular/core';
+import { addDoc, collection, collectionData, deleteDoc, doc, docData, Firestore, updateDoc } from '@angular/fire/firestore';
+import { catchError, from, Observable } from 'rxjs';
 import { Curriculum } from '../models/curriculum';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { v4 as uuidv4 } from 'uuid';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CurriculumService {
-  constructor() {}
+  private readonly collectionName = 'curriculums';
 
-  private curriculums: Curriculum[] = [
-    {
-      uuid: '816d823e-609f-4ef8-b59a-57904cc0230b',
-      code: 'BSZKUFO-N1',
-      name: 'Üzemmérnök-informatikus BProf_N',
-      terms: 6,
-      requiredCredit: 180,
-    },
-  ];
+  public readonly curriculums$: Observable<Curriculum[]>;
 
-  private curriculumSubject = new BehaviorSubject<Curriculum[]>(this.curriculums);
-
-  getAllCurriculums(): Observable<Curriculum[]> {
-    return this.curriculumSubject.asObservable();
+  constructor(
+    private readonly firestore: Firestore,
+    private readonly snackBarService: SnackbarService
+  ) {
+    this.curriculums$ = this.getAll().pipe(
+      catchError(() => {
+        this.snackBarService.openErrorSnackbar('Error while loading curriculums.');
+        return [[]];
+      })
+    );
   }
 
-  addCurriculum(curriculum: Omit<Curriculum, 'uuid'>): Promise<Curriculum> {
-    const newCurriculum: Curriculum = {
-      ...curriculum,
-      uuid: uuidv4(),
-    };
-
-    this.curriculums.push(newCurriculum);
-
-    this.curriculumSubject.next([...this.curriculums]);
-    return new Promise(resolve => resolve(newCurriculum));
+  public getAll(): Observable<Curriculum[]> {
+    const curriculumsRef = collection(this.firestore, this.collectionName);
+    return collectionData(curriculumsRef, { idField: 'id' }) as Observable<Curriculum[]>;
   }
 
-  editCurriculum(curriculum: Curriculum): void {
-    this.curriculums = this.curriculums.map(c => (c.uuid === curriculum.uuid ? curriculum : c));
+  public getById(id: string): Observable<Curriculum> {
+    const curriculumDocRef = doc(this.firestore, `${this.collectionName}/${id}`);
+    return docData(curriculumDocRef, { idField: 'id' }) as Observable<Curriculum>;
+  }
 
-    this.curriculumSubject.next([...this.curriculums]);
+  public create(curriculum: Curriculum): void {
+    const curriculumsRef = collection(this.firestore, this.collectionName);
+    from(addDoc(curriculumsRef, curriculum))
+      .pipe(
+        catchError(() => {
+          this.snackBarService.openErrorSnackbar('Error while saving curriculum.');
+          return [];
+        })
+      )
+      .subscribe(() => {
+        this.snackBarService.openSuccessSnackbar('Successfully saved curriculum.');
+      });
+  }
+
+  public update(curriculum: Curriculum): void {
+    const curriculumDocRef = doc(this.firestore, `${this.collectionName}/${curriculum.id}`);
+    from(updateDoc(curriculumDocRef, { ...curriculum }))
+      .pipe(
+        catchError(() => {
+          this.snackBarService.openErrorSnackbar('Error while editing curriculum.');
+          return [];
+        })
+      )
+      .subscribe(() => {
+        this.snackBarService.openSuccessSnackbar('Successfully edited curriculum.');
+      });
+  }
+
+  public delete(id: string): void {
+    const curriculumDocRef = doc(this.firestore, `${this.collectionName}/${id}`);
+    from(deleteDoc(curriculumDocRef))
+      .pipe(
+        catchError(() => {
+          this.snackBarService.openErrorSnackbar('Error while deleting curriculum.');
+          return [];
+        })
+      )
+      .subscribe(() => {
+        this.snackBarService.openSuccessSnackbar('Successfully deleted curriculum.');
+      });
   }
 }

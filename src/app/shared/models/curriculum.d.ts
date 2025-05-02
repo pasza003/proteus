@@ -1,5 +1,5 @@
 export interface Curriculum {
-  uuid: string;
+  id: string;
   code: string;
   name: string;
   terms: number;

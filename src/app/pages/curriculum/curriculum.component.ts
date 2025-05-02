@@ -1,6 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { Curriculum } from '../../shared/models/curriculum';
 import { CurriculumService } from '../../shared/services/curriculum.service';
@@ -8,52 +10,41 @@ import { CurriculumDialogComponent } from './curriculum-dialog/curriculum-dialog
 
 @Component({
   selector: 'app-curriculum',
-  imports: [MatTableModule, MatButtonModule],
+  imports: [MatTableModule, MatButtonModule, MatIcon],
   templateUrl: './curriculum.component.html',
   styleUrl: './curriculum.component.scss',
 })
-export class CurriculumComponent implements OnInit {
-  readonly dialog = inject(MatDialog);
-  readonly displayedColumns: string[] = ['code', 'name', 'terms', 'requiredCredit'];
+export class CurriculumComponent {
+  private readonly dialog = inject(MatDialog);
+  public readonly displayedColumns: string[] = ['code', 'name', 'terms', 'requiredCredit', 'actions'];
 
-  curriculums: Curriculum[] = [];
+  public readonly curriculums: Signal<Curriculum[]>;
 
-  constructor(private curriculumService: CurriculumService) {}
-
-  ngOnInit(): void {
-    this.loadCurriculums();
+  constructor(private readonly curriculumService: CurriculumService) {
+    this.curriculums = toSignal(this.curriculumService.curriculums$, { initialValue: [] });
   }
 
-  loadCurriculums(): void {
-    this.curriculumService.getAllCurriculums().subscribe({
-      next: curriculums => {
-        this.curriculums = curriculums;
-      },
-      error: () => {
-        console.log('Error while loading curriculums.');
-      },
-    });
-  }
-
-  openCreateCurriculumDialog(): void {
+  public openCreateCurriculumDialog(): void {
     const dialogRef = this.dialog.open(CurriculumDialogComponent);
 
-    dialogRef.afterClosed().subscribe((result: Omit<Curriculum, 'uuid'> | undefined) => {
-      if (result !== undefined) {
-        this.curriculumService.addCurriculum(result);
+    dialogRef.afterClosed().subscribe((result: Curriculum | undefined) => {
+      if (result) {
+        this.curriculumService.create(result);
       }
     });
   }
 
-  openEditCurriculumDialog(row: Curriculum): void {
-    const dialogRef = this.dialog.open(CurriculumDialogComponent, {
-      data: row,
-    });
+  public openEditCurriculumDialog(data: Curriculum): void {
+    const dialogRef = this.dialog.open(CurriculumDialogComponent, { data });
 
     dialogRef.afterClosed().subscribe((result: Curriculum | undefined) => {
-      if (result !== undefined) {
-        this.curriculumService.editCurriculum(result);
+      if (result) {
+        this.curriculumService.update(result);
       }
     });
+  }
+
+  public delete(row: Curriculum): void {
+    this.curriculumService.delete(row.id);
   }
 }
