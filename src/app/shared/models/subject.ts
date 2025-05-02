@@ -12,7 +12,7 @@ export const RequirementTypeMap = {
 export type RequirementType = (typeof RequirementTypeMap)[keyof typeof RequirementTypeMap];
 
 export interface Subject {
-  uuid: string;
+  id: string;
   name: string;
   code: string;
   signupType: SignupTypes;

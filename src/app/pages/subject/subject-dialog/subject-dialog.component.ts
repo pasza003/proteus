@@ -29,30 +29,14 @@ import { RequirementType, RequirementTypeMap, SignupTypeMap, SignupTypes, Subjec
   styleUrl: './subject-dialog.component.scss',
 })
 export class SubjectDialogComponent implements OnInit {
-  ngOnInit(): void {
-    if (this.data) {
-      this.isEditMode = true;
-      const controls = this.subjectForm.controls;
-      controls.uuid.setValue(this.data.uuid);
-      controls.name.setValue(this.data.name);
-      controls.code.setValue(this.data.code);
-      controls.signupType.setValue(this.data.signupType);
-      controls.requirementType.setValue(this.data.requirementType);
-      controls.interiorOrganization.setValue(this.data.interiorOrganization);
-      controls.recommendedTerm.setValue(this.data.recommendedTerm);
-      controls.credit.setValue(this.data.credit);
-    }
-  }
-  isEditMode = false;
+  private readonly dialogRef = inject(MatDialogRef<SubjectDialogComponent>);
+  private readonly data = inject<Subject>(MAT_DIALOG_DATA);
 
-  readonly dialogRef = inject(MatDialogRef<SubjectDialogComponent>);
-
-  readonly data = inject<Subject>(MAT_DIALOG_DATA);
-  readonly signupTypes: SignupTypes[] = Object.values(SignupTypeMap);
-  readonly requirementTypes: RequirementType[] = Object.values(RequirementTypeMap);
-
-  subjectForm = new FormGroup({
-    uuid: new FormControl(''),
+  public isEditMode = false;
+  public readonly signupTypes: SignupTypes[] = Object.values(SignupTypeMap);
+  public readonly requirementTypes: RequirementType[] = Object.values(RequirementTypeMap);
+  public readonly subjectForm = new FormGroup({
+    id: new FormControl(''),
     name: new FormControl('', [Validators.required]),
     code: new FormControl('', [Validators.required]),
     signupType: new FormControl('', [Validators.required]),
@@ -62,15 +46,28 @@ export class SubjectDialogComponent implements OnInit {
     credit: new FormControl(0, [Validators.required]),
   });
 
-  cancel(): void {
+  public ngOnInit(): void {
+    if (this.data) {
+      this.isEditMode = true;
+      const controls = this.subjectForm.controls;
+      controls.id.setValue(this.data.id);
+      controls.name.setValue(this.data.name);
+      controls.code.setValue(this.data.code);
+      controls.signupType.setValue(this.data.signupType);
+      controls.requirementType.setValue(this.data.requirementType);
+      controls.interiorOrganization.setValue(this.data.interiorOrganization);
+      controls.recommendedTerm.setValue(this.data.recommendedTerm);
+      controls.credit.setValue(this.data.credit);
+    }
+  }
+
+  public cancel(): void {
     this.dialogRef.close();
   }
 
-  save() {
+  public save(): void {
     if (this.subjectForm.valid) {
       this.dialogRef.close(this.subjectForm.value);
-    } else {
-      console.log('Error');
     }
   }
 }
