@@ -31,7 +31,7 @@ export class CurriculumDialogComponent implements OnInit {
     if (this.data) {
       this.isEditMode = true;
       const controls = this.curriculumForm.controls;
-      controls.uuid.setValue(this.data.uuid);
+      controls.id.setValue(this.data.id);
       controls.code.setValue(this.data.code);
       controls.name.setValue(this.data.name);
       controls.terms.setValue(this.data.terms);
@@ -45,7 +45,7 @@ export class CurriculumDialogComponent implements OnInit {
   readonly data = inject<Curriculum>(MAT_DIALOG_DATA);
 
   curriculumForm = new FormGroup({
-    uuid: new FormControl(''),
+    id: new FormControl(''),
     code: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required]),
     terms: new FormControl(0, [Validators.required, Validators.min(0)]),
