@@ -1,6 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { Subject } from '../../shared/models/subject';
 import { SubjectService } from '../../shared/services/subject.service';
@@ -8,52 +10,50 @@ import { SubjectDialogComponent } from './subject-dialog/subject-dialog.componen
 
 @Component({
   selector: 'app-subject',
-  imports: [MatTableModule, MatButtonModule],
+  imports: [MatTableModule, MatButtonModule, MatIcon],
   templateUrl: './subject.component.html',
   styleUrl: './subject.component.scss',
 })
-export class SubjectComponent implements OnInit {
-  readonly dialog = inject(MatDialog);
-  readonly displayedColumns: string[] = ['name', 'code', 'signupType', 'requirementType', 'interiorOrganization', 'recommendedTerm', 'credit'];
+export class SubjectComponent {
+  private readonly dialog = inject(MatDialog);
 
-  subjects: Subject[] = [];
+  public readonly displayedColumns: string[] = [
+    'name',
+    'code',
+    'signupType',
+    'requirementType',
+    'interiorOrganization',
+    'recommendedTerm',
+    'credit',
+    'actions',
+  ];
+  public readonly subjects: Signal<Subject[]>;
 
-  constructor(private subjectService: SubjectService) {}
-
-  ngOnInit(): void {
-    this.loadSubjects();
+  constructor(private readonly subjectService: SubjectService) {
+    this.subjects = toSignal(this.subjectService.subjects$, { initialValue: [] });
   }
 
-  loadSubjects(): void {
-    this.subjectService.getAllSubjects().subscribe({
-      next: subjects => {
-        this.subjects = subjects;
-      },
-      error: () => {
-        console.log('Error while loading organisations.');
-      },
-    });
-  }
-
-  openCreateSubjectDialog(): void {
+  public openCreateSubjectDialog(): void {
     const dialogRef = this.dialog.open(SubjectDialogComponent);
 
-    dialogRef.afterClosed().subscribe((result: Omit<Subject, 'uuid'> | undefined) => {
-      if (result !== undefined) {
-        this.subjectService.addSubject(result);
+    dialogRef.afterClosed().subscribe((result: Subject | undefined) => {
+      if (result) {
+        this.subjectService.create(result);
       }
     });
   }
 
-  openEditSubjectDialog(row: Subject): void {
-    const dialogRef = this.dialog.open(SubjectDialogComponent, {
-      data: row,
-    });
+  public openEditSubjectDialog(data: Subject): void {
+    const dialogRef = this.dialog.open(SubjectDialogComponent, { data });
 
     dialogRef.afterClosed().subscribe((result: Subject | undefined) => {
-      if (result !== undefined) {
-        this.subjectService.editSubject(result);
+      if (result) {
+        this.subjectService.update(result);
       }
     });
+  }
+
+  public delete(row: Subject): void {
+    this.subjectService.delete(row.id);
   }
 }
