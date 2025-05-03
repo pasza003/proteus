@@ -1,3 +1,11 @@
+mat-toolbar {
+  --mat-toolbar-standard-height: 56px;
+  --mat-toolbar-mobile-height: 56px;
+}
+mat-sidenav {
+  --mat-sidenav-container-width: 240px;
+}
+
 .sidebar-container {
   display: flex;
   flex-direction: column;
@@ -12,10 +20,9 @@
 .sidenav-container {
   flex: 1;
 
-  .content-container {
-    margin: 0 auto;
-    width: 80%;
-  }
+  display: grid;
+  grid-template-columns: 80%;
+  justify-content: center;
 }
 
 .is-mobile .sidenav-container {
