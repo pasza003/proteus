@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>{{ isEditMode ? 'Edit' : 'Create' }} Organisation</h2>
 <mat-dialog-content>
   <form id="organisation-form" [formGroup]="organisationForm">
-    <mat-form-field id="code">
+    <mat-form-field appearance="outline" id="code">
       <mat-label>Code</mat-label>
       <input cdkFocusInitial matInput placeholder="SZTE" formControlName="code" required />
       @if (organisationForm.controls.code.hasError('required')) {
@@ -9,7 +9,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field id="city">
+    <mat-form-field appearance="outline" id="city">
       <mat-label>City</mat-label>
       <input matInput placeholder="Szeged" formControlName="city" required />
       @if (organisationForm.controls.city.hasError('required')) {
@@ -17,7 +17,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field id="name">
+    <mat-form-field appearance="outline" id="name">
       <mat-label>Name</mat-label>
       <input matInput placeholder="Szegedi Tudományegyetem" formControlName="name" required />
       @if (organisationForm.controls.name.hasError('required')) {
@@ -25,7 +25,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field id="om-code">
+    <mat-form-field appearance="outline" id="om-code">
       <mat-label>OM Code</mat-label>
       <input matInput placeholder="FI62198" formControlName="omCode" required />
       @if (organisationForm.controls.omCode.hasError('required')) {
@@ -33,7 +33,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field id="post-code">
+    <mat-form-field appearance="outline" id="post-code">
       <mat-label>Post Code</mat-label>
       <input matInput placeholder="6720" formControlName="postCode" required />
       @if (organisationForm.controls.postCode.hasError('required')) {
@@ -41,7 +41,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field id="street">
+    <mat-form-field appearance="outline" id="street">
       <mat-label>Street</mat-label>
       <input matInput placeholder="Dugonics tér 13." formControlName="street" required />
       @if (organisationForm.controls.street.hasError('required')) {
