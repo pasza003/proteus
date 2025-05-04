@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>{{ isEditMode ? 'Edit' : 'Create' }} Curriculum</h2>
 <mat-dialog-content>
   <form id="curriculum-form" [formGroup]="curriculumForm">
-    <mat-form-field id="code">
+    <mat-form-field appearance="outline" id="code">
       <mat-label>Code</mat-label>
       <input cdkFocusInitial matInput placeholder="BSZKUFO-N1" formControlName="code" required />
       @if (curriculumForm.controls.code.hasError('required')) {
@@ -9,7 +9,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field id="name">
+    <mat-form-field appearance="outline" id="name">
       <mat-label>Name</mat-label>
       <input matInput placeholder="Üzemmérnök-informatikus BProf_N" formControlName="name" required />
       @if (curriculumForm.controls.name.hasError('required')) {
@@ -17,7 +17,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field id="terms">
+    <mat-form-field appearance="outline" id="terms">
       <mat-label>Terms</mat-label>
       <input matInput placeholder="6" formControlName="terms" type="number" required appNumberOnly />
       @if (curriculumForm.controls.terms.hasError('required')) {
@@ -28,7 +28,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field id="required-credit">
+    <mat-form-field appearance="outline" id="required-credit">
       <mat-label>Required credit</mat-label>
       <input matInput placeholder="180" formControlName="requiredCredit" type="number" required appNumberOnly />
       @if (curriculumForm.controls.requiredCredit.hasError('required')) {

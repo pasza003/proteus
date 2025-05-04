@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>{{ isEditMode ? 'Edit' : 'Create' }} Subject</h2>
 <mat-dialog-content>
   <form id="subject-form" [formGroup]="subjectForm">
-    <mat-form-field id="name">
+    <mat-form-field appearance="outline" id="name">
       <mat-label>Name</mat-label>
       <input cdkFocusInitial matInput placeholder="Webfejlesztési eszközök a gyakorlatban" formControlName="name" required />
       @if (subjectForm.controls.name.hasError('required')) {
@@ -9,7 +9,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field id="code">
+    <mat-form-field appearance="outline" id="code">
       <mat-label>Code</mat-label>
       <input matInput placeholder="IN1065SA-N1" formControlName="code" required />
       @if (subjectForm.controls.code.hasError('required')) {
@@ -17,7 +17,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field id="signup-type">
+    <mat-form-field appearance="outline" id="signup-type">
       <mat-label>Signup type</mat-label>
       <mat-select formControlName="signupType" required>
         @for (signupType of signupTypes; track signupType) {
@@ -29,7 +29,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field id="requirement-type">
+    <mat-form-field appearance="outline" id="requirement-type">
       <mat-label>Requirement type</mat-label>
       <mat-select formControlName="requirementType" required>
         @for (req of requirementTypes; track req) {
@@ -41,7 +41,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field id="interior-organization">
+    <mat-form-field appearance="outline" id="interior-organization">
       <mat-label>Interior organization</mat-label>
       <input matInput placeholder="TTIK Természettudományi és Informatikai Kar" formControlName="interiorOrganization" required />
       @if (subjectForm.controls.interiorOrganization.hasError('required')) {
@@ -49,7 +49,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field id="recommended-term">
+    <mat-form-field appearance="outline" id="recommended-term">
       <mat-label>Recommended term</mat-label>
       <input matInput placeholder="0" formControlName="recommendedTerm" type="number" required appNumberOnly />
       @if (subjectForm.controls.recommendedTerm.hasError('required')) {
@@ -60,7 +60,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field id="credit">
+    <mat-form-field appearance="outline" id="credit">
       <mat-label>Credit</mat-label>
       <input matInput placeholder="2" formControlName="credit" type="number" required appNumberOnly />
       @if (subjectForm.controls.credit.hasError('required')) {
