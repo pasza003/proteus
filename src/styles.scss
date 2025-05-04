@@ -8,6 +8,10 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
+.mat-mdc-form-field {
+  padding-top: 8px;
+}
+
 .snackbar-success {
   --mdc-snackbar-container-color: #4caf50;
   --mdc-snackbar-supporting-text-color: white;
