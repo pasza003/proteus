@@ -1,0 +1,16 @@
+mat-card {
+  width: 60%;
+  margin: 1rem auto;
+  text-align: center;
+
+  mat-card-header {
+    align-self: center;
+    padding-top: 0;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  mat-card {
+    width: 100%;
+  }
+}

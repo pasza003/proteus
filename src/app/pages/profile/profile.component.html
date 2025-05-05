@@ -1,0 +1,27 @@
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title><h2>Profile</h2> </mat-card-title>
+    <mat-card-subtitle>
+      <mat-divider />
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="details">
+      <h3>Details</h3>
+      <p>Code: {{ user()?.code }}</p>
+      <p>Email: {{ user()?.email }}</p>
+      <p>Role: {{ user()?.role }}</p>
+    </div>
+
+    <div class="organisation">
+      <h3>Organisation</h3>
+      <p>Code: {{ organisation()?.code }}</p>
+      <p>Name: {{ organisation()?.name }}</p>
+      <p>City: {{ organisation()?.city }}</p>
+      <p>OM Code: {{ organisation()?.omCode }}</p>
+      <p>Post Code: {{ organisation()?.postCode }}</p>
+      <p>Street: {{ organisation()?.street }}</p>
+    </div>
+  </mat-card-content>
+</mat-card>
