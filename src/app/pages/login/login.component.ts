@@ -15,12 +15,12 @@ import { AuthService } from './../../shared/services/auth.service';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  constructor(private readonly authService: AuthService) {}
-
   public readonly loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   });
+
+  constructor(private readonly authService: AuthService) {}
 
   public login(): void {
     if (this.loginForm.valid) {

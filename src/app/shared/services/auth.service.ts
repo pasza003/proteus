@@ -4,7 +4,7 @@ import { doc, DocumentData, Firestore, getDoc, setDoc } from '@angular/fire/fire
 import { Router } from '@angular/router';
 import { createUserWithEmailAndPassword, setPersistence } from 'firebase/auth';
 import { catchError, from, map, Observable, of, pipe, switchMap } from 'rxjs';
-import { ProteusUser } from '../models/proteus-user';
+import { ProteusUser, RegisterRequest } from '../models/proteus-user';
 import { SnackbarService } from './snackbar.service';
 
 @Injectable({
@@ -27,14 +27,16 @@ export class AuthService {
     setPersistence(this.firebaseAuth, browserSessionPersistence);
   }
 
-  public register(userRequest: Omit<ProteusUser, 'role'>): void {
-    from(createUserWithEmailAndPassword(this.firebaseAuth, userRequest.email, userRequest.password))
+  public register(request: RegisterRequest): void {
+    from(createUserWithEmailAndPassword(this.firebaseAuth, request.email, request.password))
       .pipe(
         switchMap(credential => {
           const userRef = doc(this.firestore, 'users', credential.user.uid);
           return from(
             setDoc(userRef, {
-              code: userRequest.code,
+              email: request.email,
+              code: request.code,
+              organisation: request.organisationId,
               role: 'USER',
             })
           );
