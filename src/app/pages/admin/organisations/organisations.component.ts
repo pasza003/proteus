@@ -4,17 +4,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import { Organisation } from '../../shared/models/organisation';
-import { OrganisationService } from './../../shared/services/organisation.service';
+import { RouterLink } from '@angular/router';
+import { Organisation } from '../../../shared/models/organisation';
+import { OrganisationService } from '../../../shared/services/organisation.service';
 import { OrganisationDialogComponent } from './organisation-dialog/organisation-dialog.component';
 
 @Component({
   selector: 'app-organisation',
-  imports: [MatTableModule, MatButtonModule, MatIcon],
-  templateUrl: './organisation.component.html',
-  styleUrl: './organisation.component.scss',
+  imports: [MatTableModule, MatButtonModule, MatIcon, RouterLink],
+  templateUrl: './organisations.component.html',
+  styleUrl: './organisations.component.scss',
 })
-export class OrganisationComponent {
+export class OrganisationsComponent {
   private readonly dialog = inject(MatDialog);
 
   public readonly displayedColumns: string[] = ['code', 'city', 'name', 'omCode', 'postCode', 'street', 'actions'];

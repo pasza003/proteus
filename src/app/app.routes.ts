@@ -3,8 +3,8 @@ import { adminGuard, authGuard, publicGuard } from './shared/guards/auth.guard';
 
 export const routes: Routes = [
   {
-    path: 'organisation',
-    loadComponent: () => import('./pages/organisation/organisation.component').then(m => m.OrganisationComponent),
+    path: 'admin/organisations',
+    loadComponent: () => import('./pages/admin/organisations/organisations.component').then(m => m.OrganisationsComponent),
     canActivate: [adminGuard],
   },
   {
