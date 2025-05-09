@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Organisation } from '../../../shared/models/organisation';
+import { Organisation } from '../../../../shared/models/organisation';
 
 @Component({
   selector: 'app-organisation-dialog',
