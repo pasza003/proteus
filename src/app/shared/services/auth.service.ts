@@ -37,7 +37,7 @@ export class AuthService {
               email: request.email,
               code: request.code,
               organisation: request.organisationId,
-              role: 'USER',
+              role: 'ADMIN',
             })
           );
         }),

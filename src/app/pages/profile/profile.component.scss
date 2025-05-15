@@ -1,16 +1,31 @@
 mat-card {
-  width: 60%;
+  width: 80%;
   margin: 1rem auto;
-  text-align: center;
 
   mat-card-header {
     align-self: center;
     padding-top: 0;
+  }
+
+  mat-card-content .content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
   }
 }
 
 @media only screen and (max-width: 800px) {
   mat-card {
     width: 100%;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  mat-form-field,
+  button {
+    width: 200px;
   }
 }
