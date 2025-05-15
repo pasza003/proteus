@@ -7,3 +7,13 @@ export interface Organisation {
   postCode: string;
   street: string;
 }
+
+export interface OrganisationCurriculums {
+  organisationId: string;
+  curriculumId: string;
+}
+
+export interface OrganisationWithCurriculums {
+  organisation: Organisation;
+  curriculums: Curriculum[];
+}
