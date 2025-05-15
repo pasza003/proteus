@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, deleteDoc, doc, docData, Firestore, updateDoc } from '@angular/fire/firestore';
-import { catchError, from, Observable } from 'rxjs';
+import { addDoc, collection, collectionData, deleteDoc, doc, Firestore, updateDoc } from '@angular/fire/firestore';
+import { catchError, from, map, Observable } from 'rxjs';
 import { Organisation } from '../models/organisation';
 import { SnackbarService } from './snackbar.service';
 
@@ -29,9 +29,8 @@ export class OrganisationService {
     return collectionData(organisationsRef, { idField: 'id' }) as Observable<Organisation[]>;
   }
 
-  public getById(id: string): Observable<Organisation> {
-    const organisationDocRef = doc(this.firestore, `${this.collectionName}/${id}`);
-    return docData(organisationDocRef, { idField: 'id' }) as Observable<Organisation>;
+  public getById(id: string): Observable<Organisation | null> {
+    return this.organisations$.pipe(map(organisation => organisation.find(o => o.id === id) ?? null));
   }
 
   public create(organisation: Organisation): void {

@@ -6,10 +6,10 @@ import { NgControl } from '@angular/forms';
   standalone: true,
 })
 export class NumberOnlyDirective {
-  constructor(private control: NgControl) {}
+  constructor(private readonly control: NgControl) {}
 
   @HostListener('input', ['$event'])
-  onInput(event: Event) {
+  public onInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     const cleaned = input.value.replace(/[^0-9]/g, '');
 
@@ -20,7 +20,7 @@ export class NumberOnlyDirective {
   }
 
   @HostListener('keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent) {
+  public onKeyDown(event: KeyboardEvent): void {
     const allowed = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab'];
     if (allowed.includes(event.key) || event.ctrlKey || event.metaKey) {
       return;
