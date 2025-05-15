@@ -50,7 +50,7 @@ export class AuthService {
       )
       .subscribe(() => {
         this.router.navigateByUrl('/home');
-        this.snackbarService.openSuccessSnackbar('Registration successfull!');
+        this.snackbarService.openSuccessSnackbar('Registration successful!');
       });
   }
 
@@ -73,7 +73,7 @@ export class AuthService {
       )
       .subscribe(() => {
         this.router.navigateByUrl('/home');
-        this.snackbarService.openSuccessSnackbar('Login successfull!');
+        this.snackbarService.openSuccessSnackbar('Login successful!');
       });
   }
 
@@ -91,6 +91,7 @@ export class AuthService {
       .pipe(
         catchError(error => {
           this.snackbarService.openErrorSnackbar('Logout failed.');
+          console.error('Logout failed', error);
           return [];
         })
       )
