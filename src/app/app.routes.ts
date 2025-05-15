@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { selectedOrganisationResolver } from './pages/admin/organisation/resolvers/selected-organisation.resolver';
 import { adminGuard, authGuard, publicGuard } from './shared/guards/auth.guard';
 
 export const routes: Routes = [
@@ -6,6 +7,15 @@ export const routes: Routes = [
     path: 'admin/organisations',
     loadComponent: () => import('./pages/admin/organisations/organisations.component').then(m => m.OrganisationsComponent),
     canActivate: [adminGuard],
+  },
+  {
+    path: 'admin/organisations/:organisationId',
+    loadComponent: () => import('./pages/admin/organisation/organisation.component').then(m => m.OrganisationComponent),
+    canActivate: [adminGuard],
+    resolve: {
+      data: selectedOrganisationResolver,
+    },
+    runGuardsAndResolvers: 'always',
   },
   {
     path: 'curriculum',

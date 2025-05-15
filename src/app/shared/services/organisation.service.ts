@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, deleteDoc, doc, Firestore, updateDoc } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, deleteDoc, doc, Firestore, getDocs, query, updateDoc, where } from '@angular/fire/firestore';
 import { catchError, from, map, Observable } from 'rxjs';
-import { Organisation } from '../models/organisation';
+import { Organisation, OrganisationCurriculums } from '../models/organisation';
 import { SnackbarService } from './snackbar.service';
 
 @Injectable({
@@ -72,6 +72,55 @@ export class OrganisationService {
       )
       .subscribe(() => {
         this.snackBarService.openSuccessSnackbar('Successfully deleted organisation.');
+      });
+  }
+
+  public getOrganisationCurriculumns(organisation: string): Observable<OrganisationCurriculums[]> {
+    const collRef = collection(this.firestore, 'curriculum_organisation');
+    const q = query(collRef, where('organisationId', '==', organisation));
+    return collectionData(q, { idField: 'id' }) as Observable<OrganisationCurriculums[]>;
+  }
+
+  public linkCurriculumToOrganisation(organisationId: string, curriculumId: string): void {
+    const collRef = collection(this.firestore, 'curriculum_organisation');
+
+    const newLink = {
+      organisationId,
+      curriculumId,
+    };
+
+    from(addDoc(collRef, newLink))
+      .pipe(
+        catchError(() => {
+          this.snackBarService.openErrorSnackbar('Error while linking curriculum.');
+          return [];
+        })
+      )
+      .subscribe(() => {
+        this.snackBarService.openSuccessSnackbar('Successfully linked curriculum.');
+      });
+  }
+
+  public deleteCurriculumLink(organisationId: string, curriculumId: string): void {
+    const collRef = collection(this.firestore, 'curriculum_organisation');
+    const q = query(collRef, where('organisationId', '==', organisationId), where('curriculumId', '==', curriculumId));
+
+    from(
+      getDocs(q).then(snapshot => {
+        snapshot.forEach(docSnap => {
+          const ref = doc(this.firestore, 'curriculum_organisation', docSnap.id);
+          deleteDoc(ref);
+        });
+      })
+    )
+      .pipe(
+        catchError(() => {
+          this.snackBarService.openErrorSnackbar('Error while deleting linked curriculum.');
+          return [];
+        })
+      )
+      .subscribe(() => {
+        this.snackBarService.openSuccessSnackbar('Successfully deleted linked curriculum.');
       });
   }
 }
