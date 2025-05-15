@@ -10,7 +10,7 @@ import { OrganisationService } from '../../../shared/services/organisation.servi
 import { OrganisationDialogComponent } from './organisation-dialog/organisation-dialog.component';
 
 @Component({
-  selector: 'app-organisation',
+  selector: 'app-organisations',
   imports: [MatTableModule, MatButtonModule, MatIcon, RouterLink],
   templateUrl: './organisations.component.html',
   styleUrl: './organisations.component.scss',
