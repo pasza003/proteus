@@ -4,20 +4,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import { Curriculum } from '../../shared/models/curriculum';
-import { CurriculumService } from '../../shared/services/curriculum.service';
+import { Curriculum } from '../../../shared/models/curriculum';
+import { CurriculumService } from '../../../shared/services/curriculum.service';
 import { CurriculumDialogComponent } from './curriculum-dialog/curriculum-dialog.component';
 
 @Component({
-  selector: 'app-curriculum',
+  selector: 'app-curriculums',
   imports: [MatTableModule, MatButtonModule, MatIcon],
-  templateUrl: './curriculum.component.html',
-  styleUrl: './curriculum.component.scss',
+  templateUrl: './curriculums.component.html',
+  styleUrl: './curriculums.component.scss',
 })
-export class CurriculumComponent {
+export class CurriculumsComponent {
   private readonly dialog = inject(MatDialog);
-  public readonly displayedColumns: string[] = ['code', 'name', 'terms', 'requiredCredit', 'actions'];
 
+  public readonly displayedColumns: string[] = ['code', 'name', 'terms', 'requiredCredit', 'actions'];
   public readonly curriculums: Signal<Curriculum[]>;
 
   constructor(private readonly curriculumService: CurriculumService) {
