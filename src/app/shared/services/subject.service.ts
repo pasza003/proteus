@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, deleteDoc, doc, docData, Firestore, updateDoc } from '@angular/fire/firestore';
-import { catchError, from, Observable } from 'rxjs';
+import { addDoc, collection, collectionData, deleteDoc, doc, docData, documentId, Firestore, query, updateDoc, where } from '@angular/fire/firestore';
+import { catchError, from, Observable, of } from 'rxjs';
 import { Subject } from '../models/subject';
 import { SnackbarService } from './snackbar.service';
 
@@ -74,5 +74,13 @@ export class SubjectService {
       .subscribe(() => {
         this.snackBarService.openSuccessSnackbar('Successfully deleted subject.');
       });
+  }
+
+  public filter(subjectIds: string[]): Observable<Subject[]> {
+    if (!subjectIds.length) return of([]);
+
+    const collRef = collection(this.firestore, 'subjects');
+    const q = query(collRef, where(documentId(), 'in', subjectIds));
+    return collectionData(q, { idField: 'id' }) as Observable<Subject[]>;
   }
 }

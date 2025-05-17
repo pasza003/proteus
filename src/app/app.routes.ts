@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { selectedOrganisationResolver } from './pages/admin/organisation/resolvers/selected-organisation.resolver';
 import { adminGuard, authGuard, publicGuard } from './shared/guards/auth.guard';
+import { selectedCurriculumResolver } from './pages/admin/curriculum/resolvers/selected-curriculum.resolver';
 
 export const routes: Routes = [
   {
@@ -21,6 +22,15 @@ export const routes: Routes = [
     path: 'admin/curriculums',
     loadComponent: () => import('./pages/admin/curriculums/curriculums.component').then(m => m.CurriculumsComponent),
     canActivate: [adminGuard],
+  },
+  {
+    path: 'admin/curriculums/:curriculumId',
+    loadComponent: () => import('./pages/admin/curriculum/curriculum.component').then(m => m.CurriculumComponent),
+    canActivate: [adminGuard],
+    resolve: {
+      data: selectedCurriculumResolver,
+    },
+    runGuardsAndResolvers: 'always',
   },
   {
     path: 'subject',

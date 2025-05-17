@@ -1,7 +1,20 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, deleteDoc, doc, docData, documentId, Firestore, query, updateDoc, where } from '@angular/fire/firestore';
+import {
+  addDoc,
+  collection,
+  collectionData,
+  deleteDoc,
+  doc,
+  docData,
+  documentId,
+  Firestore,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from '@angular/fire/firestore';
 import { catchError, from, Observable, of } from 'rxjs';
-import { Curriculum } from '../models/curriculum';
+import { Curriculum, CurriculumSubjects } from '../models/curriculum';
 import { SnackbarService } from './snackbar.service';
 
 @Injectable({
@@ -82,5 +95,54 @@ export class CurriculumService {
     const collRef = collection(this.firestore, 'curriculums');
     const q = query(collRef, where(documentId(), 'in', curriculumIds));
     return collectionData(q, { idField: 'id' }) as Observable<Curriculum[]>;
+  }
+
+  public getCurriculumnSubjects(curriculum: string): Observable<CurriculumSubjects[]> {
+    const collRef = collection(this.firestore, 'curriculum_subject');
+    const q = query(collRef, where('curriculumId', '==', curriculum));
+    return collectionData(q, { idField: 'id' }) as Observable<CurriculumSubjects[]>;
+  }
+
+  public linkSubjectToCurriculum(curriculumId: string, subjectId: string): void {
+    const collRef = collection(this.firestore, 'curriculum_subject');
+
+    const newLink = {
+      curriculumId,
+      subjectId,
+    };
+
+    from(addDoc(collRef, newLink))
+      .pipe(
+        catchError(() => {
+          this.snackBarService.openErrorSnackbar('Error while linking subject.');
+          return [];
+        })
+      )
+      .subscribe(() => {
+        this.snackBarService.openSuccessSnackbar('Successfully linked subject.');
+      });
+  }
+
+  public deleteSubjectLink(curriculumId: string, subjectId: string): void {
+    const collRef = collection(this.firestore, 'curriculum_subject');
+    const q = query(collRef, where('curriculumId', '==', curriculumId), where('subjectId', '==', subjectId));
+
+    from(
+      getDocs(q).then(snapshot => {
+        snapshot.forEach(docSnap => {
+          const ref = doc(this.firestore, 'curriculum_subject', docSnap.id);
+          deleteDoc(ref);
+        });
+      })
+    )
+      .pipe(
+        catchError(() => {
+          this.snackBarService.openErrorSnackbar('Error while deleting linked subject.');
+          return [];
+        })
+      )
+      .subscribe(() => {
+        this.snackBarService.openSuccessSnackbar('Successfully deleted linked subject.');
+      });
   }
 }

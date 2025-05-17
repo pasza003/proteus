@@ -4,13 +4,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { RouterLink } from '@angular/router';
 import { Curriculum } from '../../../shared/models/curriculum';
 import { CurriculumService } from '../../../shared/services/curriculum.service';
 import { CurriculumDialogComponent } from './curriculum-dialog/curriculum-dialog.component';
 
 @Component({
   selector: 'app-curriculums',
-  imports: [MatTableModule, MatButtonModule, MatIcon],
+  imports: [MatTableModule, MatButtonModule, MatIcon, RouterLink],
   templateUrl: './curriculums.component.html',
   styleUrl: './curriculums.component.scss',
 })
