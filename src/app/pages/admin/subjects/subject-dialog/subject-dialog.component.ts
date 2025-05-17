@@ -5,8 +5,8 @@ import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatD
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { NumberOnlyDirective } from '../../../shared/directives/number-only.directive';
-import { RequirementType, RequirementTypeMap, SignupTypeMap, SignupTypes, Subject } from '../../../shared/models/subject';
+import { NumberOnlyDirective } from '../../../../shared/directives/number-only.directive';
+import { RequirementType, RequirementTypeMap, SignupTypeMap, SignupTypes, Subject } from '../../../../shared/models/subject';
 
 @Component({
   selector: 'app-subject-dialog',
