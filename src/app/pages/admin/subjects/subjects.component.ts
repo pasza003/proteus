@@ -4,17 +4,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import { Subject } from '../../shared/models/subject';
-import { SubjectService } from '../../shared/services/subject.service';
+import { Subject } from '../../../shared/models/subject';
+import { SubjectService } from '../../../shared/services/subject.service';
 import { SubjectDialogComponent } from './subject-dialog/subject-dialog.component';
 
 @Component({
-  selector: 'app-subject',
+  selector: 'app-subjects',
   imports: [MatTableModule, MatButtonModule, MatIcon],
-  templateUrl: './subject.component.html',
-  styleUrl: './subject.component.scss',
+  templateUrl: './subjects.component.html',
+  styleUrl: './subjects.component.scss',
 })
-export class SubjectComponent {
+export class SubjectsComponent {
   private readonly dialog = inject(MatDialog);
 
   public readonly displayedColumns: string[] = [
