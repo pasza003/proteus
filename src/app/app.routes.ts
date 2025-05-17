@@ -18,8 +18,8 @@ export const routes: Routes = [
     runGuardsAndResolvers: 'always',
   },
   {
-    path: 'curriculum',
-    loadComponent: () => import('./pages/curriculum/curriculum.component').then(m => m.CurriculumComponent),
+    path: 'admin/curriculums',
+    loadComponent: () => import('./pages/admin/curriculums/curriculums.component').then(m => m.CurriculumsComponent),
     canActivate: [adminGuard],
   },
   {
