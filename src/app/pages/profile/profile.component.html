@@ -1,4 +1,4 @@
-<mat-card appearance="outlined">
+<mat-card appearance="raised">
   <mat-card-header>
     <mat-card-title>
       <h2>Profile</h2>
@@ -24,6 +24,16 @@
         <p>OM Code: {{ organisation()?.omCode }}</p>
         <p>Post Code: {{ organisation()?.postCode }}</p>
         <p>Street: {{ organisation()?.street }}</p>
+      </div>
+    </div>
+
+    <div class="curriculum">
+      <h3>Curriculum</h3>
+      <div class="content">
+        <p>Code: {{ curriculum()?.code }}</p>
+        <p>Name: {{ curriculum()?.name }}</p>
+        <p>Terms: {{ curriculum()?.terms }}</p>
+        <p>Required Credit: {{ curriculum()?.requiredCredit }}</p>
       </div>
     </div>
   </mat-card-content>

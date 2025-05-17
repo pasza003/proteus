@@ -37,6 +37,7 @@ export class AuthService {
               email: request.email,
               code: request.code,
               organisation: request.organisationId,
+              curriculum: request.curriculumId,
               role: 'ADMIN',
             })
           );

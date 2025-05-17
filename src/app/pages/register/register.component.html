@@ -14,6 +14,18 @@
       }
     </mat-form-field>
 
+    <mat-form-field appearance="outline" id="curriculum">
+      <mat-label>Curriculum</mat-label>
+      <mat-select formControlName="curriculumId">
+        @for (curriculum of curriculumsForSelectedOrg(); track curriculum) {
+          <mat-option [value]="curriculum.id">{{ curriculum.name }}</mat-option>
+        }
+      </mat-select>
+      @if (registerForm.controls.curriculumId.hasError('required')) {
+        <mat-error>Curriculum is required</mat-error>
+      }
+    </mat-form-field>
+
     <mat-form-field appearance="outline">
       <mat-label>Code</mat-label>
       <input matInput type="text" formControlName="code" placeholder="ABC123" />
