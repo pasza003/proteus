@@ -5,3 +5,13 @@ export interface Curriculum {
   terms: number;
   requiredCredit: number;
 }
+
+export interface CurriculumSubjects {
+  curriculumId: string;
+  subjectId: string;
+}
+
+export interface CurriculumWithSubjects {
+  curriculum: Curriculum;
+  subjects: Subject[];
+}
