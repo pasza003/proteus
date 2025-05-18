@@ -6,13 +6,12 @@
 .table-container {
   margin-top: 16px;
   overflow-x: scroll;
-
-  table .mat-mdc-row:hover {
-    cursor: pointer;
-    opacity: 0.6;
-  }
 }
 
 .mat-column-actions {
   text-align: center;
+
+  .mat-icon {
+    cursor: pointer;
+  }
 }

@@ -2,23 +2,8 @@
   <h2>Curriculum: {{ computeCurriculumName() }}</h2>
 </div>
 
-<div class="subject-link-container">
-  <h3>Link new</h3>
-  <form [formGroup]="subjectLinkForm">
-    <mat-form-field appearance="outline" id="subject">
-      <mat-label>Subject</mat-label>
-      <mat-select formControlName="subjectId" required>
-        @for (subject of unlinkedSubjects(); track subject) {
-          <mat-option [value]="subject.id">{{ subject.name }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-
-    <button mat-flat-button [disabled]="!subjectLinkForm.valid" (click)="add()" type="submit">Link</button>
-  </form>
-</div>
-
 <div class="table-container">
+  <h3>Subjects</h3>
   <table mat-table [dataSource]="data().subjects" class="mat-elevation-z8">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -65,4 +50,22 @@
     <tr mat-header-row *matHeaderRowDef="subjectDisplayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: subjectDisplayedColumns"></tr>
   </table>
+</div>
+
+<hr width="80%" />
+
+<div class="subject-link-container">
+  <h3>Link new</h3>
+  <form [formGroup]="subjectLinkForm">
+    <mat-form-field appearance="outline" id="subject">
+      <mat-label>Subject</mat-label>
+      <mat-select formControlName="subjectId" required>
+        @for (subject of unlinkedSubjects(); track subject) {
+          <mat-option [value]="subject.id">{{ subject.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-flat-button [disabled]="!subjectLinkForm.valid" (click)="add()" type="submit">Link</button>
+  </form>
 </div>

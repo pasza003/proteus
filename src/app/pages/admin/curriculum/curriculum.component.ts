@@ -26,7 +26,7 @@ import { SubjectService } from '../../../shared/services/subject.service';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    ],
+  ],
   templateUrl: './curriculum.component.html',
   styleUrl: './curriculum.component.scss',
 })

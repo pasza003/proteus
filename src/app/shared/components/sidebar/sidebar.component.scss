@@ -5,6 +5,9 @@ mat-toolbar {
 mat-sidenav {
   --mat-sidenav-container-width: 240px;
 }
+mat-sidenav-content {
+  overflow-x: hidden;
+}
 
 .sidebar-container {
   display: flex;

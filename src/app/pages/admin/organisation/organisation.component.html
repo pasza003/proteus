@@ -2,23 +2,8 @@
   <h2>Organisation: {{ computeOrganisationName() }}</h2>
 </div>
 
-<div class="curriculum-link-container">
-  <h3>Link new</h3>
-  <form [formGroup]="curriculumLinkForm">
-    <mat-form-field appearance="outline" id="curriculum">
-      <mat-label>Curriculum</mat-label>
-      <mat-select formControlName="curriculumId" required>
-        @for (curriculum of unlinkedCurriculums(); track curriculum) {
-          <mat-option [value]="curriculum.id">{{ curriculum.name }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-
-    <button mat-flat-button [disabled]="!curriculumLinkForm.valid" (click)="add()" type="submit">Link</button>
-  </form>
-</div>
-
 <div class="table-container">
+  <h3>Curriculums</h3>
   <table mat-table [dataSource]="data().curriculums" class="mat-elevation-z8">
     <ng-container matColumnDef="code">
       <th mat-header-cell *matHeaderCellDef>Code</th>
@@ -50,4 +35,22 @@
     <tr mat-header-row *matHeaderRowDef="curriculumDisplayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: curriculumDisplayedColumns"></tr>
   </table>
+</div>
+
+<hr width="80%" />
+
+<div class="curriculum-link-container">
+  <h3>Link new</h3>
+  <form [formGroup]="curriculumLinkForm">
+    <mat-form-field appearance="outline" id="curriculum">
+      <mat-label>Curriculum</mat-label>
+      <mat-select formControlName="curriculumId" required>
+        @for (curriculum of unlinkedCurriculums(); track curriculum) {
+          <mat-option [value]="curriculum.id">{{ curriculum.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-flat-button [disabled]="!curriculumLinkForm.valid" (click)="add()" type="submit">Link</button>
+  </form>
 </div>

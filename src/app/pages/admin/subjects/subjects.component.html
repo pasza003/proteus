@@ -1,6 +1,8 @@
 <div class="header">
   <h2>Subjects</h2>
-  <button mat-raised-button (click)="openCreateSubjectDialog()">Create</button>
+  <button mat-icon-button (click)="openCreateSubjectDialog()">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>
 
 <div class="table-container">
@@ -43,11 +45,12 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let subject">
+        <mat-icon (click)="$event.stopPropagation(); openEditSubjectDialog(subject)">edit</mat-icon>
         <mat-icon (click)="delete(subject); $event.stopPropagation()">delete</mat-icon>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="openEditSubjectDialog(row)"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 </div>
